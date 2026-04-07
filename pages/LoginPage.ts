@@ -17,9 +17,9 @@ export class LoginPage {
         await this.page.goto(`${process.env.APP_URL}`);
     }
 
-    async login(user: string, pwd: string) {
-        await this.username.fill(user);
-        await this.password.fill(pwd);
+    async login() {
+        await this.username.fill(`${process.env.UNAME}`);
+        await this.password.fill(`${process.env.PWD}`);
         await this.loginButton.click();
     }
 
