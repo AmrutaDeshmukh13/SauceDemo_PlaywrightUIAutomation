@@ -2,6 +2,8 @@ import { test, expect } from '../fixtures/basicFixture';
 import { ProductsPage } from '../pages/ProductsPage';
 import { CartPage } from '../pages/CartPage';
 import { CheckoutPage } from '../pages/CheckoutPage';
+import { ScreenshotUtil } from '../utils/ScreenshotUtil';
+
 
 test('product test', async ({ loggedInPage }) => {
   const productPage = new ProductsPage(loggedInPage);
@@ -19,6 +21,7 @@ test('product test', async ({ loggedInPage }) => {
   await cartPage.verifyProductInCart('Sauce Labs Backpack');
   await cartPage.clickOnCheckout();
   await cartPage.fillCheckoutInformation('ftest','ltest',4535);
+  await ScreenshotUtil.capturePage(loggedInPage, 'ProductCart');
 
   await checkoutPage.verifyProductInCheckout('Sauce Labs Backpack');
   await checkoutPage.clickOnFinish();
