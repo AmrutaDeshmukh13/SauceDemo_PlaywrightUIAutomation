@@ -1,9 +1,11 @@
 //import { Page, Locator,expect,TestInfo } from '@playwright/test';
 import { Page, Locator,expect,TestInfo } from '@playwright/test';
 import { ScreenshotUtil } from '../utils/ScreenshotUtil';
+import { BasePage } from './BasePage'; 
 
-export class CartPage{
-    readonly page: Page;
+
+export class CartPage extends BasePage{
+    //readonly page: Page;
     readonly productcart:Locator;
     readonly btnCheckout:Locator;
     readonly txtFName:Locator;  
@@ -12,7 +14,8 @@ export class CartPage{
     readonly btnContinue:Locator;
     readonly testInfo: TestInfo;
     constructor(page: Page,testInfo: TestInfo) {
-        this.page = page;
+       // this.page = page;
+       super(page);
         this.productcart=page.locator('.inventory_item_name');
         this.btnCheckout=page.getByRole('button',{name:'checkout'}); 
         this.txtFName =page.getByPlaceholder('First Name');  
@@ -27,16 +30,16 @@ async verifyProductInCart(productName: string){
   }
  
   async clickOnCheckout(){
-    await this.btnCheckout.click();
+    await this.click(this.btnCheckout);
 
     await this.page.waitForURL('https://www.saucedemo.com/checkout-step-one.html');
     await expect(this.page.getByText('Checkout: Your Information')).toBeVisible(); 
 }
-
+//inheritaed fill method used
 async fillCheckoutInformation(FName:string,LName:string,zipCode:number){
-  await this.txtFName.fill(FName);
-  await this.txtLName.fill(LName);
-  await this.txtZipCode.fill(zipCode.toString());
+  await this.fill(this.txtFName,FName);
+  await this.fill(this.txtLName,LName);
+  await this.fill(this.txtZipCode,zipCode.toString());
  
  await ScreenshotUtil.captureElement(
       this.txtZipCode,
@@ -44,7 +47,7 @@ async fillCheckoutInformation(FName:string,LName:string,zipCode:number){
       this.testInfo
     );
   
-  await this.btnContinue.click();
+  await this.click(this.btnContinue);
    
 }
 }
