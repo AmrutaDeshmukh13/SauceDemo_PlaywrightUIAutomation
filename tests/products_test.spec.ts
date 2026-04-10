@@ -5,9 +5,9 @@ import { CheckoutPage } from '../pages/CheckoutPage';
 import { ScreenshotUtil } from '../utils/ScreenshotUtil';
 
 
-test('product test', async ({ loggedInPage }) => {
+test('product test', async ({ loggedInPage },testInfo) => {
   const productPage = new ProductsPage(loggedInPage);
-  const cartPage = new CartPage(loggedInPage);
+  const cartPage = new CartPage(loggedInPage,testInfo);
   const checkoutPage = new CheckoutPage(loggedInPage);
 
   await productPage.addToCart('Sauce Labs Backpack');
@@ -21,14 +21,21 @@ test('product test', async ({ loggedInPage }) => {
   await cartPage.verifyProductInCart('Sauce Labs Backpack');
   await cartPage.clickOnCheckout();
   await cartPage.fillCheckoutInformation('ftest','ltest',4535);
-  await ScreenshotUtil.capturePage(loggedInPage, 'ProductCart');
+  
+  //Taking page screenshot
+  await ScreenshotUtil.capturePage(
+    loggedInPage,
+    'checkout-page',
+    testInfo
+  );
 
   await checkoutPage.verifyProductInCheckout('Sauce Labs Backpack');
   await checkoutPage.clickOnFinish();
 });
-test('add another product test', async ({ loggedInPage }) => {
+test('add another product test', async ({ loggedInPage },testInfo) => {
   const productPage = new ProductsPage(loggedInPage);
-  const cartPage = new CartPage(loggedInPage);
+   const cartPage = new CartPage(loggedInPage,testInfo);
+
   const checkoutPage = new CheckoutPage(loggedInPage);
 
   await productPage.addToCart('Sauce Labs Bike Light');

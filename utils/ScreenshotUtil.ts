@@ -1,39 +1,35 @@
 // utils/ScreenshotUtil.ts
-import { Page, Locator } from '@playwright/test';
-
+import { Page, Locator, TestInfo } from '@playwright/test';
 
 export class ScreenshotUtil {
 
-  // 📸 1. Capture Specific Element Screenshot
-  static async captureElement(
-    locator: Locator,
-    fileName: string
-  ): Promise<string> {
-
-    const path = `screenshots/element-${fileName}-${Date.now()}.png`;
-
-    await locator.scrollIntoViewIfNeeded();
-
-    await locator.screenshot({ path });
-
-    return path;
-  }
-
-  // 📸 2. Capture Full Page Screenshot
+  // 📸 Page Screenshot
   static async capturePage(
     page: Page,
-    fileName: string
-  ): Promise<string> {
+    fileName: string,
+    testInfo: TestInfo
+  ): Promise<void> {
 
-    const path = `screenshots/page-${fileName}-${Date.now()}.png`;
+    const buffer = await page.screenshot({ fullPage: true });
 
-    await page.screenshot({
-      path,
-      fullPage: true
+    await testInfo.attach(fileName, {
+      body: buffer,
+      contentType: 'image/png'
     });
-
-    return path;
   }
 
+  // 📸 Element Screenshot
+  static async captureElement(
+    locator: Locator,
+    fileName: string,
+    testInfo: TestInfo
+  ): Promise<void> {
 
+    const buffer = await locator.screenshot();
+
+    await testInfo.attach(fileName, {
+      body: buffer,
+      contentType: 'image/png'
+    });
+  }
 }

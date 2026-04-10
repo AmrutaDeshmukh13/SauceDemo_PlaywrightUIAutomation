@@ -1,4 +1,5 @@
-import { Page, Locator,expect } from '@playwright/test';
+//import { Page, Locator,expect,TestInfo } from '@playwright/test';
+import { Page, Locator,expect,TestInfo } from '@playwright/test';
 import { ScreenshotUtil } from '../utils/ScreenshotUtil';
 
 export class CartPage{
@@ -9,7 +10,8 @@ export class CartPage{
     readonly txtLName:Locator;  
     readonly txtZipCode:Locator;
     readonly btnContinue:Locator;
-    constructor(page: Page) {
+    readonly testInfo: TestInfo;
+    constructor(page: Page,testInfo: TestInfo) {
         this.page = page;
         this.productcart=page.locator('.inventory_item_name');
         this.btnCheckout=page.getByRole('button',{name:'checkout'}); 
@@ -17,6 +19,7 @@ export class CartPage{
         this.txtLName=page.getByPlaceholder('Last Name');
         this.txtZipCode=page.getByPlaceholder('Zip/Postal Code');
         this.btnContinue=page.locator("xpath=//input[@name='continue']");
+        this.testInfo = testInfo;
       }
 
 async verifyProductInCart(productName: string){
@@ -34,7 +37,13 @@ async fillCheckoutInformation(FName:string,LName:string,zipCode:number){
   await this.txtFName.fill(FName);
   await this.txtLName.fill(LName);
   await this.txtZipCode.fill(zipCode.toString());
-  await ScreenshotUtil.captureElement(this.txtZipCode, 'zipCode');
+ 
+ await ScreenshotUtil.captureElement(
+      this.txtZipCode,
+      'ZipCode',
+      this.testInfo
+    );
+  
   await this.btnContinue.click();
    
 }
