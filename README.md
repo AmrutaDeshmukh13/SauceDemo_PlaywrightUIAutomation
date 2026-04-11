@@ -52,6 +52,26 @@ Provides rich and interactive test reports
 🎥 Videos (only on failure)
 📊 Allure reports
 
+🌐 Cross-Browser Execution
+
+Framework supports execution across multiple browsers:
+
+- Chromium (Chrome/Edge)
+- Firefox
+- WebKit (Safari)
+
+Run tests on all browsers:
+npx playwright test
+
+Run on specific browser:
+npx playwright test --project=Chromium
+
+Parallel Execution
+🔹 Overview
+
+The framework supports parallel test execution using Playwright’s built-in worker mechanism to reduce execution time and improve efficiency.
+
+
 📂 Project Structure
 ├── pages/
 │   ├── BasePage.ts
