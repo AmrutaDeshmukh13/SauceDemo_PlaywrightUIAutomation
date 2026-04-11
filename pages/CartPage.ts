@@ -1,4 +1,3 @@
-//import { Page, Locator,expect,TestInfo } from '@playwright/test';
 import { Page, Locator,expect,TestInfo } from '@playwright/test';
 import { ScreenshotUtil } from '../utils/ScreenshotUtil';
 import { BasePage } from './BasePage'; 

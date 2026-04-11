@@ -1,19 +1,28 @@
-import { Page, Locator,expect } from '@playwright/test';
+import { Page, Locator,expect,TestInfo } from '@playwright/test';
+import { ScreenshotUtil } from '../utils/ScreenshotUtil';
+import { BasePage } from './BasePage'; 
 
-export class CheckoutPage{
-    readonly page: Page;
-    
+
+export class CheckoutPage extends BasePage{
+    //readonly page: Page;
+
+    readonly productName:Locator;
+    readonly btnFinish :Locator;
+    readonly sucessMessage:Locator;
     constructor(page: Page) {
-        this.page = page;
-            
+      //  this.page = page;
+        super(page);
+        this.productName=page.locator('.inventory_item_name');    
+        this.btnFinish=page.getByRole('button',{name:'finish'});
+        this.sucessMessage=page.locator('.complete-text');
     }
 
 async verifyProductInCheckout(productName: string){
-    await expect(this.page.locator('.inventory_item_name')).toHaveText(productName);
+    await expect(this.productName).toHaveText(productName);
   }
 
   async clickOnFinish(){
-    await this.page.getByRole('button',{name:'finish'}).click();
-    await expect(this.page.locator('.complete-text')).toHaveText('Your order has been dispatched, and will arrive just as fast as the pony can get there!');
+    await this.click(this.btnFinish);
+    await expect(this.sucessMessage).toHaveText('Your order has been dispatched, and will arrive just as fast as the pony can get there!');
   }
 }

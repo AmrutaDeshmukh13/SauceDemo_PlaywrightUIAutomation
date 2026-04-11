@@ -3,7 +3,7 @@ import { Page, Locator, TestInfo } from '@playwright/test';
 
 export class ScreenshotUtil {
 
-  // 📸 Page Screenshot
+  //  Page Screenshot
   static async capturePage(
     page: Page,
     fileName: string,
@@ -18,7 +18,7 @@ export class ScreenshotUtil {
     });
   }
 
-  // 📸 Element Screenshot
+  //  Element Screenshot
   static async captureElement(
     locator: Locator,
     fileName: string,
@@ -32,4 +32,26 @@ export class ScreenshotUtil {
       contentType: 'image/png'
     });
   }
+   //attach video failure in Allure report
+    static async attachVideoOnFailure(
+    page: Page,
+    testInfo: TestInfo
+  ): Promise<void> {
+
+    // Only attach if test failed
+    if (testInfo.status !== testInfo.expectedStatus) {
+
+      const video = page.video();
+
+      if (video) {
+        const path = await video.path();
+
+        await testInfo.attach('Failure Video', {
+          path: path,
+          contentType: 'video/webm'
+        });
+      }
+    }
+  }
+
 }
