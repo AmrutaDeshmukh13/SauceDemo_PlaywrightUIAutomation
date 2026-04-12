@@ -40,7 +40,7 @@ export class ScreenshotUtil {
 
     // Only attach if test failed
     if (testInfo.status !== testInfo.expectedStatus) {
-
+      if (page) {
       const video = page.video();
 
       if (video) {
@@ -51,6 +51,7 @@ export class ScreenshotUtil {
           contentType: 'video/webm'
         });
       }
+    }
     }
   }
 
