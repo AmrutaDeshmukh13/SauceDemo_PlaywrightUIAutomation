@@ -9,6 +9,7 @@ pipeline {
 
         stage('Checkout Code') {
             steps {
+                git branch: 'main',
                 git 'https://github.com/AmrutaDeshmukh13/SauceDemo_PlaywrightUIAutomation.git'
             }
         }
