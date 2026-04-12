@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "target": "ES6",
+    "module": "commonjs",
+    "types": ["node"],   // 👈 ADD HERE
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  }
+}

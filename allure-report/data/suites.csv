@@ -1,4 +1,5 @@
 "DESCRIPTION","DURATION IN MS","NAME","PARENT SUITE","START TIME","STATUS","STOP TIME","SUB SUITE","SUITE","TEST CLASS","TEST METHOD"
-"","4982","add another product to cart","firefox","Tue Apr 07 20:58:10 IST 2026","passed","Tue Apr 07 20:58:15 IST 2026","","products_test.spec.ts","",""
-"","6894","product test","firefox","Tue Apr 07 23:29:23 IST 2026","passed","Tue Apr 07 23:29:29 IST 2026","","products_test.spec.ts","",""
-"","10059","add another product test","firefox","Tue Apr 07 23:29:22 IST 2026","passed","Tue Apr 07 23:29:32 IST 2026","","products_test.spec.ts","",""
+"","6577","Valid Checkout","chromium","Sun Apr 12 13:15:53 IST 2026","passed","Sun Apr 12 13:15:59 IST 2026","","checkOut\checkOutPositive_test.spec.ts","",""
+"","12341","Another Checkout","firefox","Sun Apr 12 13:16:06 IST 2026","passed","Sun Apr 12 13:16:19 IST 2026","","checkOut\checkOutPositive_test.spec.ts","",""
+"","4868","Another Checkout","chromium","Sun Apr 12 13:15:52 IST 2026","passed","Sun Apr 12 13:15:57 IST 2026","","checkOut\checkOutPositive_test.spec.ts","",""
+"","17006","Valid Checkout","firefox","Sun Apr 12 13:16:06 IST 2026","passed","Sun Apr 12 13:16:23 IST 2026","","checkOut\checkOutPositive_test.spec.ts","",""
