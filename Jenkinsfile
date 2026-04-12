@@ -8,6 +8,12 @@ pipeline {
 
     stages {
 
+        stage('Checkout Code') {
+            steps {
+                git branch: 'main', url: 'https://github.com/AmrutaDeshmukh13/SauceDemo_PlaywrightUIAutomation.git'
+            }
+        }
+
         stage('Install Dependencies') {
             steps {
                 bat 'npm install'
@@ -25,29 +31,21 @@ pipeline {
                 bat 'npx playwright test'
             }
         }
-
-        stage('Generate Allure Report') {
-            //steps {
-                  // bat '''
-                  // npx allure-commandline generate ./allure-results --clean -o ./allure-report
-                  // '''
-                  
-  //  }
-  steps {
-        allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
-    }
-        }
     }
 
     post {
         always {
-            archiveArtifacts artifacts: 'allure-report/**', allowEmptyArchive: true
+            archiveArtifacts artifacts: '**/test-results/**', allowEmptyArchive: true
+
+            allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
         }
-        failure {
-            echo 'Test execution failed ❌'
-        }
+
         success {
             echo 'Test execution successful ✅'
+        }
+
+        failure {
+            echo 'Test execution failed ❌'
         }
     }
 }
