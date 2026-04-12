@@ -11,7 +11,9 @@ export class CartPage extends BasePage{
     readonly txtLName:Locator;  
     readonly txtZipCode:Locator;
     readonly btnContinue:Locator;
+    readonly errorMessage:Locator;
     readonly testInfo: TestInfo;
+
     constructor(page: Page,testInfo: TestInfo) {
        // this.page = page;
        super(page);
@@ -21,6 +23,7 @@ export class CartPage extends BasePage{
         this.txtLName=page.getByPlaceholder('Last Name');
         this.txtZipCode=page.getByPlaceholder('Zip/Postal Code');
         this.btnContinue=page.locator("xpath=//input[@name='continue']");
+        this.errorMessage=page.locator('[data-test="error"]');
         this.testInfo = testInfo;
       }
 
@@ -36,17 +39,27 @@ async verifyProductInCart(productName: string){
 }
 //inheritaed fill method used
 async fillCheckoutInformation(FName:string,LName:string,zipCode:number){
-  await this.fill(this.txtFName,FName);
+  if (FName !=undefined){
+     await this.fill(this.txtFName,FName);
+     }
+  if (LName !=undefined){   
   await this.fill(this.txtLName,LName);
-  await this.fill(this.txtZipCode,zipCode.toString());
- 
- await ScreenshotUtil.captureElement(
-      this.txtZipCode,
-      'ZipCode',
-      this.testInfo
+  }
+  if (zipCode !=undefined){
+      await this.fill(this.txtZipCode,zipCode.toString());
+      await ScreenshotUtil.captureElement(
+            this.txtZipCode,
+            'ZipCode',
+            this.testInfo
     );
+  }
+ 
+ 
   
   await this.click(this.btnContinue);
    
 }
+ async verifyErrorMessage(errorMsg:string){
+   await expect(this.errorMessage).toHaveText(errorMsg);
+ }
 }

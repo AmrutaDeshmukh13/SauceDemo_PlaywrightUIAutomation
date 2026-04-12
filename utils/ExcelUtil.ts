@@ -13,6 +13,22 @@ export class ExcelUtil {
     }
   }
 
+  // 🔹 Normalize row (handle blank/null values)
+  private static normalizeRow(row: any): any {
+    const normalized: any = {};
+
+    Object.keys(row).forEach((key) => {
+      const value = row[key];
+
+      normalized[key] =
+        value === undefined || value === null
+          ? ''                        // 👈 convert blank to empty string
+          : value.toString().trim(); // 👈 trim value
+    });
+
+    return normalized;
+  }
+
   // 🔹 Get all data from sheet
   static getSheetData(sheetName: string): any[] {
     this.validateFile();
@@ -30,7 +46,8 @@ export class ExcelUtil {
       throw new Error(`❌ No data found in sheet: ${sheetName}`);
     }
 
-    return data;
+    // ✅ Normalize all rows
+    return data.map(row => this.normalizeRow(row));
   }
 
   // 🔹 Get only runnable data (run = Y)
@@ -39,7 +56,7 @@ export class ExcelUtil {
 
     const filtered = data.filter((row: any) =>
       row.run &&
-      row.run.toString().trim().toUpperCase() === 'Y'
+      row.run.toUpperCase() === 'Y'
     );
 
     if (filtered.length === 0) {
@@ -54,14 +71,13 @@ export class ExcelUtil {
     const data = this.getSheetData(sheetName);
 
     const row = data.find((row: any) =>
-      row.testName &&
-      row.testName.toString().trim() === testName.trim() &&
+      row.testName === testName.trim() &&
       row.run &&
-      row.run.toString().trim().toUpperCase() === 'Y'
+      row.run.toUpperCase() === 'Y'
     );
 
     if (!row) {
-      throw new Error(`No matching data found for test: "${testName}" in sheet: "${sheetName}"`);
+      throw new Error(`❌ No matching data found for test: "${testName}" in sheet: "${sheetName}"`);
     }
 
     return row;
