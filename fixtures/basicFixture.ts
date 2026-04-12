@@ -7,7 +7,12 @@ type Fixtures = {
 
 export const test = base.extend<Fixtures>({
   loggedInPage: async ({ page }, use) => {
+    
+    if (!page) {
+    throw new Error('Page is not initialized');
+  }
 
+  
     const loginPage = new LoginPage(page);
 
     await loginPage.gotoLoginPage();
