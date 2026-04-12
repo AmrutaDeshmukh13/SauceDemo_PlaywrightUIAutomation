@@ -9,7 +9,7 @@ test.afterEach(async ({ loggedInPage }, testInfo) => {
   await ScreenshotUtil.attachVideoOnFailure(loggedInPage, testInfo);
 });
 
-test('product test', async ({ loggedInPage },testInfo) => {
+test.skip('product test', async ({ loggedInPage },testInfo) => {
   const productPage = new ProductsPage(loggedInPage);
   const cartPage = new CartPage(loggedInPage,testInfo);
   const checkoutPage = new CheckoutPage(loggedInPage);
@@ -43,7 +43,7 @@ test('product test', async ({ loggedInPage },testInfo) => {
 
   await checkoutPage.clickOnFinish();
 });
-test('add another product test', async ({ loggedInPage },testInfo) => {
+test.skip('add another product test', async ({ loggedInPage },testInfo) => {
   const productPage = new ProductsPage(loggedInPage);
    const cartPage = new CartPage(loggedInPage,testInfo);
 

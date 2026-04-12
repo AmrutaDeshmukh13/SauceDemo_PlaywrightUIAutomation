@@ -75,6 +75,7 @@ Handles:
 Blank/null values
 Data normalization
 Supports parallel execution with data-driven tests
+
 📁 Project Structure
 ├── pages/
 │   ├── BasePage.ts

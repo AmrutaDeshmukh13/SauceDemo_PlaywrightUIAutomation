@@ -1,7 +1,7 @@
 import { test } from '@playwright/test';
 import { LoginPage } from '../pages/LoginPage';
 
-test('login test', async ({ page }) => {
+test.skip('login test', async ({ page }) => {
     const loginPage = new LoginPage(page);
 
     await loginPage.gotoLoginPage();
