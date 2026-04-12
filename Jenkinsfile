@@ -7,34 +7,27 @@ pipeline {
 
     stages {
 
-        stage('Checkout Code') {
-            steps {
-                git branch: 'main',
-                git 'https://github.com/AmrutaDeshmukh13/SauceDemo_PlaywrightUIAutomation.git'
-            }
-        }
-
         stage('Install Dependencies') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
         }
 
         stage('Install Playwright Browsers') {
             steps {
-                sh 'npx playwright install'
+                bat 'npx playwright install'
             }
         }
 
         stage('Run Tests') {
             steps {
-                sh 'npx playwright test'
+                bat 'npx playwright test'
             }
         }
 
         stage('Generate Allure Report') {
             steps {
-                sh 'npx allure generate ./allure-results --clean -o ./allure-report'
+                bat 'npx allure generate ./allure-results --clean -o ./allure-report'
             }
         }
     }
