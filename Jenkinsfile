@@ -3,6 +3,7 @@ pipeline {
 
     tools {
         nodejs 'NodeJS-22'
+        allure 'Allure'
     }
 
     stages {
@@ -33,10 +34,7 @@ pipeline {
                   
   //  }
   steps {
-        allure([
-            includeProperties: false,
-            results: [[path: 'allure-results']]
-        ])
+        allure includeProperties: false, jdk: '', results: [[path: 'allure-results']]
     }
         }
     }
