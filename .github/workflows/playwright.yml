@@ -31,11 +31,12 @@ jobs:
       
       # 5. Run Playwright tests
       - name: Run Tests
-        run: npx playwright test
+        
         env:
           APP_URL: "https://www.saucedemo.com"
           UNAME: "standard_user"
           PWD: "secret_sauce"
+        run: npx playwright test
 
       # 6. Upload Playwright HTML report
       - name: Upload Playwright Report
