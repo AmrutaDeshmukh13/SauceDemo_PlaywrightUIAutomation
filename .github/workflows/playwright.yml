@@ -34,9 +34,9 @@ jobs:
       - name: Run Tests
         run: npx playwright test
         env:
-          APP_URL: ${{ secrets.APP_URL }}
-          UNAME: ${{ secrets.UNAME }}
-          PWD: ${{ secrets.PWD }}
+          APP_URL: https://www.saucedemo.com
+          UNAME: standard_user
+          PWD: secret_sauce
         
 
       # 6. Upload Playwright HTML report
