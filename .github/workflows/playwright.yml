@@ -1,27 +1,85 @@
 name: Playwright Tests
+
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ main ]
+
 jobs:
   test:
-    timeout-minutes: 60
     runs-on: ubuntu-latest
+
     steps:
-    - uses: actions/checkout@v4
-    - uses: actions/setup-node@v4
-      with:
-        node-version: lts/*
-    - name: Install dependencies
-      run: npm ci
-    - name: Install Playwright Browsers
-      run: npx playwright install --with-deps
-    - name: Run Playwright tests
-      run: npx playwright test
-    - uses: actions/upload-artifact@v4
-      if: ${{ !cancelled() }}
-      with:
-        name: playwright-report
-        path: playwright-report/
-        retention-days: 30
+      # 1. Checkout code
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 2. Setup Node.js
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # 3. Install dependencies
+      - name: Install Dependencies
+        run: npm ci
+
+      # 4. Install Playwright browsers
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      # 5. Run Playwright tests
+      - name: Run Tests
+        run: npx playwright test
+
+      # 6. Upload Playwright HTML report
+      - name: Upload Playwright Report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+
+      # 7. Upload Allure Results
+      - name: Upload Allure Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results/
+
+  # 8. Optional Job: Generate Allure Report
+  allure-report:
+    needs: test
+    runs-on: ubuntu-latest
+    if: always()
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Download Allure Results
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+
+      # Install Allure CLI
+      - name: Install Allure Commandline
+        run: |
+          sudo apt-add-repository ppa:qameta/allure -y
+          sudo apt-get update
+          sudo apt-get install allure -y
+
+      # Generate Allure report
+      - name: Generate Allure Report
+        run: |
+          allure generate allure-results --clean -o allure-report
+
+      # Upload Allure report
+      - name: Upload Allure Report
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report
