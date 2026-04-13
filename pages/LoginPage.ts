@@ -6,9 +6,9 @@ export class LoginPage {
     readonly password: Locator;
     readonly loginButton: Locator;
     
-    private readonly appUrl = process.env.APP_URL;
-    private readonly user = process.env.UNAME;
-    private readonly pwd = process.env.PWD;
+    private readonly appUrl = process.env.APP_URL!;
+    private readonly user = process.env.UNAME!;
+    private readonly pwd = process.env.PWD!;
 
     constructor(page: Page) {
         this.page = page;
@@ -33,6 +33,7 @@ export class LoginPage {
 
     async verifyLoginSucess() {
         await this.page.waitForURL('https://www.saucedemo.com/inventory.html');
+       
     }
 
 }
