@@ -29,16 +29,14 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
       
-     # Create .env file
-      - name: Create .env file
-        run: |
-         echo "APP_URL=https://www.saucedemo.com" >> .env
-         echo "UNAME=standard_user" >> .env
-         echo "PWD=secret_sauce" >> .env
-
+     
       # 5. Run Playwright tests
       - name: Run Tests
         run: npx playwright test
+        env:
+          APP_URL: ${{ secrets.APP_URL }}
+          UNAME: ${{ secrets.UNAME }}
+          PWD: ${{ secrets.PWD }}
         
 
       # 6. Upload Playwright HTML report
