@@ -5,7 +5,11 @@ export class LoginPage {
     readonly username: Locator;
     readonly password: Locator;
     readonly loginButton: Locator;
-   
+    
+    private readonly appUrl = process.env.APP_URL!;
+    private readonly user = process.env.UNAME!;
+    private readonly pwd = process.env.PWD!;
+
     constructor(page: Page) {
         this.page = page;
         this.username = page.locator('#user-name');
@@ -15,13 +19,15 @@ export class LoginPage {
     }
 
     async gotoLoginPage() {
-        await this.page.goto(`${process.env.APP_URL}`);
-        
+        //await this.page.goto(`${process.env.APP_URL}`);
+         await this.page.goto(this.appUrl);        
     }
 
     async login() {
-        await this.username.fill(`${process.env.UNAME}`);
-        await this.password.fill(`${process.env.PWD}`);
+        //await this.username.fill(`${process.env.UNAME}`);
+        //await this.password.fill(`${process.env.PWD}`);
+        await this.username.fill(this.user);
+        await this.password.fill(this.pwd);
         await this.loginButton.click();
     }
 
