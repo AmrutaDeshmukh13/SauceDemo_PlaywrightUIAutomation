@@ -9,7 +9,10 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
+    env:
+          APP_URL: ${{ secrets.APP_URL }}
+          UNAME: ${{ secrets.UNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}  
     steps:
       # 1. Checkout code
       - name: Checkout Repository
@@ -30,12 +33,8 @@ jobs:
         run: npx playwright install --with-deps
       
       # 5. Run Playwright tests
-      - name: Run Tests
-        
-        env:
-          APP_URL: "https://www.saucedemo.com"
-          UNAME: "standard_user"
-          PWD: "secret_sauce"
+      - name: Run Test
+         
         run: npx playwright test
 
       # 6. Upload Playwright HTML report
