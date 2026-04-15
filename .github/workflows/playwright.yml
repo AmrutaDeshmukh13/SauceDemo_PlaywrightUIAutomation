@@ -10,9 +10,9 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-          APP_URL: https://www.saucedemo.com
-          UNAME: standard_user
-          PWD: secret_sauce  
+          APP_URL:  ${{ secrets.APP_URL }}
+          UNAME:  ${{ secrets.UNAME }}
+          PWD:  ${{ secrets.PWD }}  
     steps:
       # 1. Checkout code
       - name: Checkout Repository
